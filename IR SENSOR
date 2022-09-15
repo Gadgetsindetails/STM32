@@ -1,0 +1,30 @@
+/*IR sensor interfacing with stm32f103ct6
+ this project brought you by Gadgets In Details
+ For more project visit : https://www.youtube.com/channel/UCd5x9xFqKaRyU15Mgmim7sw */
+ 
+ 
+ int  obstaclePin = PB1;        // This is our input pin
+void setup() 
+{
+  pinMode(obstaclePin, INPUT);
+   pinMode(PB10, OUTPUT);
+  Serial.begin(115200);  
+}
+void loop() 
+{
+  int hasObstacle = digitalRead(obstaclePin);
+
+  if (hasObstacle == LOW)
+
+  {
+        digitalWrite(PB10, HIGH);   // turn the LED on (HIGH is the voltage level)
+ 
+  }
+  else
+  {
+    
+    digitalWrite(PB10, LOW);   // turn the LED on (HIGH is the voltage level)
+  
+  }
+  delay(500);
+}
