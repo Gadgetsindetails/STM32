@@ -1,0 +1,76 @@
+/*Ultrasonic sensor interfacing with STM32f103ct6
+ this project brought you by Gadgets In Details
+ For more project visit : https://www.youtube.com/channel/UCd5x9xFqKaRyU15Mgmim7sw */
+ 
+const int pingPin = PB10;
+const int echoPin = PB1;
+
+const int LED1 = PB0;
+const int LED2 = PB5;
+const int LED3 = PB6;
+const int LED4 = PB7;
+
+void setup() {
+  pinMode(LED1 , OUTPUT);
+  pinMode(LED2 , OUTPUT);
+  pinMode(LED3 , OUTPUT);
+  pinMode(LED4 , OUTPUT);
+   Serial.begin(115200); // Starting Serial Terminal
+}
+
+void loop() {
+   long duration, distance;
+   pinMode(pingPin, OUTPUT);
+   digitalWrite(pingPin, LOW);
+   delayMicroseconds(2);
+   digitalWrite(pingPin, HIGH);
+   delayMicroseconds(10);
+   digitalWrite(pingPin, LOW);
+   pinMode(echoPin, INPUT);
+   duration = pulseIn(echoPin, HIGH);
+   Serial.print("Distance from the object = ");
+   distance = microsecondsToCentimeters(duration);
+   
+   Serial.print(distance);
+   Serial.print("cm");
+   Serial.println();
+    if ( distance <= 7 )
+  {
+    digitalWrite(LED1, HIGH);
+  }
+  else
+  {
+    digitalWrite(LED1, LOW);
+  }
+  if ( distance <= 14 )
+  {
+    digitalWrite(LED2, HIGH);
+  }
+  else
+  {
+    digitalWrite(LED2, LOW);
+  }
+  if ( distance <= 21 )
+  {
+    digitalWrite(LED3, HIGH);
+  }
+  else
+  {
+    digitalWrite(LED3, LOW);
+  }
+  if ( distance <= 28 )
+  {
+    digitalWrite(LED4, HIGH);
+  }
+  else
+  {
+    digitalWrite(LED4, LOW);
+  }
+ 
+   delay(100);
+}
+
+
+long microsecondsToCentimeters(long microseconds) {
+   return microseconds / 29 / 2;
+}
