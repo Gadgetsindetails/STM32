@@ -1,0 +1,21 @@
+int ledPin = PB9;                // LED 
+int PIRsensor=PB1; //The output of PIR sensor connected to pin B1
+int sensor_value=00; //variable to hold read sensor value
+void setup()
+{
+pinMode(ledPin, OUTPUT);
+pinMode(PIRsensor,INPUT); // configuring pin 7 as Input
+Serial.begin(115200); // To show output value of sensor in serial monitor
+}
+
+void loop()
+{
+sensor_value=digitalRead(PIRsensor); // Reading sensor value from pin B1
+if (sensor_value == HIGH) {            // if motion detected
+   digitalWrite(ledPin, HIGH);  // turn LED ON
+ } 
+ else {
+   digitalWrite(ledPin, LOW); // turn LED OFF if we have no motion
+ }
+Serial.println(sensor_value); // Printing output to serial monitor
+}
