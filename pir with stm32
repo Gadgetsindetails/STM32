@@ -1,3 +1,8 @@
+/*PIR sensor interfacing with stm32f103ct6
+ this project brought you by Gadgets In Details
+ For more project visit : https://www.youtube.com/channel/UCd5x9xFqKaRyU15Mgmim7sw */
+ 
+ 
 int ledPin = PB9;                // LED 
 int PIRsensor=PB1; //The output of PIR sensor connected to pin B1
 int sensor_value=00; //variable to hold read sensor value
