@@ -1,0 +1,55 @@
+/* CLICK THE LINK FOR MORE PROJECTS : https://www.youtube.com/channel/UCd5x9xFqKaRyU15Mgmim7sw 
+For this project first download and install the library files i.e i2c lcd and dht11 sensor */
+
+
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+#include <DHT.h>
+
+#define DHTPIN PB8      // The pin connected to DHT sensor
+#define DHTTYPE DHT11  // Change the sensor type if necessary
+DHT dht(DHTPIN, DHTTYPE);
+
+LiquidCrystal_I2C lcd(0x27, 16, 2);  // Change the I2C address if necessary
+
+const int dhtpin = PB8;
+const int buzzerPin = PB10;   // Pin for the buzzer
+const int ledPin = PB1;      // Pin for the LED
+
+void setup() {
+  lcd.init();                      // initialize the lcd 
+  //lcd.init();
+  lcd.backlight();  // Set to HIGH if backlight is needed
+  lcd.clear();
+  dht.begin();
+
+  pinMode(buzzerPin, OUTPUT);
+  pinMode(ledPin, OUTPUT);
+}
+
+void loop() {
+  float temperature = dht.readTemperature();
+  float humidity = dht.readHumidity();
+
+  lcd.setCursor(0, 0);
+  lcd.print("Temp: ");
+  lcd.print(temperature);
+  lcd.print("C");
+
+  lcd.setCursor(0, 1);
+  lcd.print("Humidity: ");
+  lcd.print(humidity);
+  lcd.print("%");
+
+  if (temperature >= 40.0) {
+    // Turn on the buzzer and blink the LED
+    digitalWrite(buzzerPin, HIGH);
+    digitalWrite(ledPin, HIGH);
+    delay(500);
+    digitalWrite(buzzerPin, LOW);
+    digitalWrite(ledPin, LOW);
+    delay(500);
+  }
+
+  delay(2000);  // Delay between readings (adjust as needed)
+}
