@@ -1,0 +1,47 @@
+#include <Wire.h> 
+#include <LiquidCrystal_I2C.h>
+
+// Set the LCD address to 0x27 for a 16 chars and 2 line display
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+
+int trig = PB1;
+int echo = PB0;
+
+
+void setup() {
+  // put your setup code here, to run once:
+  pinMode(trig, OUTPUT);
+  pinMode(echo, INPUT);
+  lcd.begin();
+
+  // Turn on the blacklight and print a message.
+  lcd.backlight();
+  Serial.begin(115200);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  digitalWrite(trig, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trig, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trig, LOW);
+
+  long distance, duration;
+  duration = pulseIn(echo, HIGH);
+
+  distance = (duration/2)/29.1;
+
+  Serial.print("The distance is = ");
+  Serial.print(distance);
+  Serial.print("cm");
+  Serial.println();
+  delay(300);
+
+  lcd.setCursor(0,0);
+  lcd.print("distance=");
+  lcd.print(distance);
+  lcd.print(" cm");
+  delay(300);
+  
+}
